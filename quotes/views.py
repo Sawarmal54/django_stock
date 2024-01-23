@@ -2,13 +2,22 @@ from django.shortcuts import render,redirect, get_object_or_404
 from .models import Stock
 from .forms import StockForm
 from django.contrib import messages
+import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+PRIMARY_KEY = os.getenv("PRIMARY_KEY")
+
+
 def home(request):
     import requests
     import json
     
     if request.method == "POST":
         ticker = request.POST['ticker']
-        api_request = requests.get(" https://api.iex.cloud/v1/data/core/quote/"+ ticker +"?token=pk_9b367d9b8e0b49388cbc6885ca6274e0")
+        api_request = requests.get(" https://api.iex.cloud/v1/data/core/quote/"+ ticker +"?token="+str(PRIMARY_KEY))
     
         try:
             api =json.loads(api_request.content)
@@ -38,7 +47,8 @@ def add_stock(request):
         output=[]
         for ticker_item in ticker:
             
-            api_request = requests.get(" https://api.iex.cloud/v1/data/core/quote/"+ str(ticker_item) +"?token=pk_9b367d9b8e0b49388cbc6885ca6274e0")
+            # api_request = requests.get(" https://api.iex.cloud/v1/data/core/quote/"+ str(ticker_item) +"?token=pk_9b367d9b8e0b49388cbc6885ca6274e0")
+            api_request = requests.get(" https://api.iex.cloud/v1/data/core/quote/"+ str(ticker_item) +"?token="+str(PRIMARY_KEY))
             
             try:
                 api =json.loads(api_request.content)
