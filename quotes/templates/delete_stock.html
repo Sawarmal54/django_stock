@@ -1,0 +1,15 @@
+<!-- stocks/templates/stocks/delete_stock.html -->
+{% extends 'base.html' %}
+{% block content %}
+<h1>Delete Stock</h1>
+<p>Are you sure you want to delete </p>
+{% if ticker  %}
+
+    {% for items in ticker  %}
+         <a href="{% url 'delete' items.id %}" class="btn btn-secondary">
+        Delete {{items}} </a> <br/><br/>
+    {% endfor %}
+{% else %}
+        You Don't Have Anything To Delete
+{% endif %}
+{% endblock %}

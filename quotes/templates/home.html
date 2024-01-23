@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Hello World</h1>
+<br />
+<br />
+{% if ticker  %}
+   {{ ticker }}
+{% endif %}
+{% if api %} 
+    {% if api == "Error" %} 
+        <p>There was a problem with your ticker symbol. Please try again.</p>
+    {% else %}  
+        {% for data in api %}
+            <ul>
+                {% for key, value in data.items %}
+                    <li><strong>{{ key }}:</strong> {{ value }}</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    {% endif %} 
+{% endif %}
+
+{% endblock %}
